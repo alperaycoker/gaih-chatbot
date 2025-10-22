@@ -143,6 +143,3 @@ Chroma veritabanı üzerinden çalışır
 
 k=10 (en benzer 10 sonucu alır)
 
-📜 Lisans
-Bu proje, Akbank GenAI Bootcamp kapsamında geliştirilmiştir.
-Kullanım koşulları için eğitimin yönergelerini dikkate alınız.
