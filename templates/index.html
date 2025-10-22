@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global AI Hub Chatbot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-section">
+                <div class="logo">🤖</div>
+                <div class="header-text">
+                    <h1>Global AI Hub Chatbot</h1>
+                    <p>Yapay Zeka Asistanınız</p>
+                </div>
+            </div>
+            <button class="clear-btn" onclick="clearChat()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
+                </svg>
+                Temizle
+            </button>
+        </header>
+
+        <!-- Chat Container -->
+        <div class="chat-container" id="chatContainer">
+            <!-- Welcome Message -->
+            <div class="welcome-message">
+                <div class="welcome-icon">🤖</div>
+                <h2>Merhaba! Global AI Hub Chatbot'a Hoş Geldiniz</h2>
+                <p>Size nasıl yardımcı olabilirim? Eğitimler, etkinlikler, topluluk hakkında her türlü sorunuzu sorabilirsiniz.</p>
+                
+                <div class="example-questions">
+                    <h3>Örnek Sorular:</h3>
+                    <button class="example-btn" onclick="askExample('Global AI Hub nedir?')">
+                        Global AI Hub nedir?
+                    </button>
+                    <button class="example-btn" onclick="askExample('Hangi eğitimler var?')">
+                        Hangi eğitimler var?
+                    </button>
+                    <button class="example-btn" onclick="askExample('Ücretsiz kurslar hangileri?')">
+                        Ücretsiz kurslar hangileri?
+                    </button>
+                    <button class="example-btn" onclick="askExample('Nasıl katılabilirim?')">
+                        Nasıl katılabilirim?
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="input-container">
+            <div class="input-wrapper">
+                <textarea 
+                    id="userInput" 
+                    placeholder="Sorunuzu yazın..." 
+                    rows="1"
+                    maxlength="1000"
+                    onkeydown="handleKeyPress(event)"
+                ></textarea>
+                <button class="send-btn" onclick="sendMessage()" id="sendBtn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="input-info">
+                <span id="charCount">0/1000</span>
+                <span class="divider">•</span>
+                <span>RAG Destekli Chatbot</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div class="loading-indicator" id="loadingIndicator" style="display: none;">
+        <div class="loader"></div>
+        <span>Düşünüyorum...</span>
+    </div>
+
+    <script>
+        const chatContainer = document.getElementById('chatContainer');
+        const userInput = document.getElementById('userInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const charCount = document.getElementById('charCount');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+
+        // Karakter sayacı
+        userInput.addEventListener('input', function() {
+            const length = this.value.length;
+            charCount.textContent = `${length}/1000`;
+            
+            // Auto-resize textarea
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 150) + 'px';
+        });
+
+        // Enter tuşu ile gönder
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+
+        // Örnek soruyu sor
+        function askExample(question) {
+            userInput.value = question;
+            sendMessage();
+        }
+
+        // Mesaj gönder
+        async function sendMessage() {
+            const message = userInput.value.trim();
+            
+            if (!message) {
+                showNotification('Lütfen bir mesaj yazın', 'warning');
+                return;
+            }
+
+            // Welcome message'ı kaldır
+            const welcomeMsg = document.querySelector('.welcome-message');
+            if (welcomeMsg) {
+                welcomeMsg.style.display = 'none';
+            }
+
+            // Kullanıcı mesajını ekle
+            addMessage(message, 'user');
+            
+            // Input'u temizle
+            userInput.value = '';
+            userInput.style.height = 'auto';
+            charCount.textContent = '0/1000';
+            sendBtn.disabled = true;
+            userInput.disabled = true;
+            
+            // Loading göster
+            showLoading();
+
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ message: message })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    addMessage(data.answer_html, 'bot', true);
+                } else {
+                    addMessage('❌ ' + (data.error || 'Bir hata oluştu'), 'bot');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                addMessage('❌ Bağlantı hatası. Lütfen tekrar deneyin.', 'bot');
+            } finally {
+                hideLoading();
+                sendBtn.disabled = false;
+                userInput.disabled = false;
+                userInput.focus();
+            }
+        }
+
+        // Mesaj ekle
+        function addMessage(content, sender, isHtml = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.textContent = sender === 'user' ? '👤' : '🤖';
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            
+            if (isHtml) {
+                contentDiv.innerHTML = content;
+            } else {
+                contentDiv.textContent = content;
+            }
+            
+            const timestamp = document.createElement('div');
+            timestamp.className = 'message-timestamp';
+            timestamp.textContent = new Date().toLocaleTimeString('tr-TR', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            messageDiv.appendChild(avatar);
+            messageDiv.appendChild(contentDiv);
+            messageDiv.appendChild(timestamp);
+            
+            chatContainer.appendChild(messageDiv);
+            
+            setTimeout(() => {
+                chatContainer.scrollTo({
+                    top: chatContainer.scrollHeight,
+                    behavior: 'smooth'
+                });
+            }, 100);
+        }
+
+        // Loading göster/gizle
+        function showLoading() {
+            loadingIndicator.style.display = 'flex';
+        }
+
+        function hideLoading() {
+            loadingIndicator.style.display = 'none';
+        }
+
+        // Bildiri göster
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 10);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        // Sohbeti temizle
+        async function clearChat() {
+            if (!confirm('Tüm sohbet geçmişi silinecek. Emin misiniz?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch('/clear', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    chatContainer.innerHTML = `
+                        <div class="welcome-message">
+                            <div class="welcome-icon">🤖</div>
+                            <h2>Sohbet Temizlendi!</h2>
+                            <p>Yeni sorularınızı sorabilirsiniz.</p>
+                            
+                            <div class="example-questions">
+                                <h3>Örnek Sorular:</h3>
+                                <button class="example-btn" onclick="askExample('Global AI Hub nedir?')">
+                                    Global AI Hub nedir?
+                                </button>
+                                <button class="example-btn" onclick="askExample('Hangi eğitimler var?')">
+                                    Hangi eğitimler var?
+                                </button>
+                                <button class="example-btn" onclick="askExample('Ücretsiz kurslar hangileri?')">
+                                    Ücretsiz kurslar hangileri?
+                                </button>
+                                <button class="example-btn" onclick="askExample('Nasıl katılabilirim?')">
+                                    Nasıl katılabilirim?
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    showNotification('Sohbet geçmişi temizlendi', 'success');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showNotification('Temizleme sırasında hata oluştu', 'error');
+            }
+        }
+
+        // Sayfa yüklendiğinde focus
+        window.addEventListener('load', () => {
+            userInput.focus();
+        });
+    </script>
+</body>
+</html>
