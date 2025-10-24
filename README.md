@@ -1,6 +1,6 @@
 # 🤖 Global AI Hub Chatbot
 
-*Yapay Zeka Destekli Soru-Cevap Asistanı* | RAG Tabanlı | Gemini 2.0 Flash
+Yapay Zeka Destekli Soru-Cevap Asistanı | RAG Tabanlı | Gemini 2.0 Flash
 
 Global AI Hub için geliştirilmiş, Retrieval-Augmented Generation (RAG) mimarisi kullanan, Türkçe ve İngilizce destekli akıllı chatbot uygulaması.
 
@@ -29,98 +29,64 @@ Global AI Hub için geliştirilmiş, Retrieval-Augmented Generation (RAG) mimari
 ## ✨ Özellikler
 
 ### 🎯 Temel Özellikler
-- *RAG Mimarisi*: Retrieval-Augmented Generation ile hassas ve kaynak tabanlı yanıtlar
-- *Semantik Arama*: Chroma vektör veritabanı ile gelişmiş benzerlik araması
-- *Konuşma Hafızası*: Kullanıcı bazlı bağlam koruma
-- *Çok Dilli Destek*: Türkçe ve İngilizce sorulara doğal yanıtlar
-- *Kaynak Gösterimi*: Her yanıt için ilgili kaynak dökümanlar
+- RAG Mimarisi: Retrieval-Augmented Generation ile hassas ve kaynak tabanlı yanıtlar
+- Semantik Arama: Chroma vektör veritabanı ile gelişmiş benzerlik araması
+- Konuşma Hafızası: Kullanıcı bazlı bağlam koruma
+- Çok Dilli Destek: Türkçe ve İngilizce sorulara doğal yanıtlar
+- Kaynak Gösterimi: Her yanıt için ilgili kaynak dökümanlar
 
 ### 🎨 Kullanıcı Deneyimi
-- *Modern Dark UI*: Gradient efektler ve smooth animasyonlar
-- *Responsive Tasarım*: Mobil, tablet ve desktop uyumlu
-- *Real-time Göstergeler*: Yükleniyor animasyonları ve durum bildirimleri
-- *Örnek Sorular*: Hızlı başlangıç için hazır sorular
-- *Markdown Desteği*: Zengin metin formatlaması
+- Modern Dark UI: Gradient efektler ve smooth animasyonlar
+- Responsive Tasarım: Mobil, tablet ve desktop uyumlu
+- Real-time Göstergeler: Yükleniyor animasyonları ve durum bildirimleri
+- Örnek Sorular: Hızlı başlangıç için hazır sorular
+- Markdown Desteği: Zengin metin formatlaması
 
 ### 🔧 Teknik Üstünlükler
-- *Google Gemini 2.0 Flash*: Son teknoloji dil modeli
-- *text-embedding-004*: Yüksek kaliteli embedding modeli
-- *Persistent Storage*: Chroma ile kalıcı vektör depolama
-- *Session Management*: Kullanıcı bazlı oturum yönetimi
-- *Error Handling*: Kapsamlı hata yönetimi ve kullanıcı geri bildirimi
+- Google Gemini 2.0 Flash: Son teknoloji dil modeli
+- text-embedding-004: Yüksek kaliteli embedding modeli
+- Persistent Storage: Chroma ile kalıcı vektör depolama
+- Session Management: Kullanıcı bazlı oturum yönetimi
+- Error Handling: Kapsamlı hata yönetimi ve kullanıcı geri bildirimi
 
 ---
 
 ## 🏗️ Mimari
 
-
 ┌─────────────────┐
-
 │   Kullanıcı     │
-
 │     Sorusu      │
-
 └────────┬────────┘
-
          │
-         
          ▼
-         
 ┌─────────────────────────────────────┐
-
 │         Flask Backend               │
-
 │  ┌──────────────────────────────┐   │
-
 │  │    1. Query Embedding        │   │
 │  │    (text-embedding-004)      │   │
-
 │  └──────────┬───────────────────┘   │
-
 │             │                        │
-
 │             ▼                        │
-
 │  ┌──────────────────────────────┐   │
-
 │  │  2. Semantic Search (k=10)   │   │
-
 │  │     Chroma Vector DB         │   │
-
 │  └──────────┬───────────────────┘   │
-
-
 │             │                        │
-
 │             ▼                        │
-
 │  ┌──────────────────────────────┐   │
-
 │  │   3. Context Retrieval       │   │
-
 │  └──────────┬───────────────────┘   │
-
 │             │                        │
-
 │             ▼                        │
-
 │  ┌──────────────────────────────┐   │
-
 │  │    4. LLM Generation         │   │
-
 │  │    (Gemini 2.0 Flash)        │   │
-
 │  └──────────┬───────────────────┘   │
-
 │             │                        │
-
 │             ▼                        │
 │  ┌──────────────────────────────┐   │
-
 │  │   5. Answer + Sources        │   │
-
 │  └──────────────────────────────┘   │
-
 └─────────────────────────────────────┘
          │
          ▼
@@ -128,6 +94,7 @@ Global AI Hub için geliştirilmiş, Retrieval-Augmented Generation (RAG) mimari
 │  Kullanıcıya    │
 │     Yanıt       │
 └─────────────────┘
+
 
 ---
 
@@ -146,13 +113,13 @@ cd gaih-chatbot
 
 ### 2. Virtual Environment Oluşturun
 
-*Windows:*
+Windows:
 bash
 python -m venv venv
 venv\Scripts\activate
 
 
-*Linux/Mac:*
+Linux/Mac:
 bash
 python3 -m venv venv
 source venv/bin/activate
@@ -170,21 +137,21 @@ env
 GOOGLE_API_KEY=your_google_api_key_here
 
 
-*🔑 Google API Key Nasıl Alınır?*
+🔑 Google API Key Nasıl Alınır?
 
 1. [Google AI Studio](https://aistudio.google.com/) adresine gidin
 2. Google hesabınızla giriş yapın
 3. "Get API Key" → "Create API Key" tıklayın
 4. API key'i kopyalayın ve .env dosyasına yapıştırın
 
-⚠️ *Güvenlik:* .env dosyasını asla Git'e commit etmeyin!
+⚠️ Güvenlik: .env dosyasını asla Git'e commit etmeyin!
 
 ### 5. Vektör Veritabanını Oluşturun
 bash
 python create_database.py
 
 
-*Beklenen Çıktı:*
+Beklenen Çıktı:
 
 ============================================================
 🚀 Global AI Hub Chatbot - Vektör Veritabanı Oluşturma
@@ -212,7 +179,7 @@ bash
 python app.py
 
 
-*Sunucu başladı:*
+Sunucu başladı:
 
 🚀 Global AI Hub Chatbot başlatılıyor...
 ✅ Vektör veritabanı başarıyla yüklendi
@@ -231,14 +198,14 @@ http://localhost:5000
 
 ### Örnek Sorular
 
-*Global AI Hub Hakkında:*
+Global AI Hub Hakkında:
 
 - "Global AI Hub nedir?"
 - "Misyonunuz nedir?"
 - "Ne zaman kuruldunuz?"
 
 
-*Eğitim Programları:*
+Eğitim Programları:
 
 - "Hangi eğitimler var?"
 - "Ücretsiz kurslar hangileri?"
@@ -246,21 +213,21 @@ http://localhost:5000
 - "Python eğitimi var mı?"
 
 
-*Başvuru ve Kayıt:*
+Başvuru ve Kayıt:
 
 - "Nasıl başvuru yapabilirim?"
 - "Kayıt şartları neler?"
 - "Yaş sınırı var mı?"
 
 
-*Teknik Detaylar:*
+Teknik Detaylar:
 
 - "Hangi teknolojiler öğretiliyor?"
 - "GPU erişimi var mı?"
 - "Hangi araçlar kullanılıyor?"
 
 
-*Kariyer Desteği:*
+Kariyer Desteği:
 
 - "İş bulma desteği var mı?"
 - "Mezunlar nerede çalışıyor?"
@@ -361,7 +328,7 @@ Bu komut otomatik olarak retrieval'ı test eder.
 http://localhost:5000/health
 
 
-*Beklenen Yanıt:*
+Beklenen Yanıt:
 json
 {
   "status": "healthy",
@@ -375,22 +342,22 @@ json
 ## 🐛 Sorun Giderme
 
 ### "GOOGLE_API_KEY bulunamadı!"
-*Çözüm:* .env dosyası oluşturun ve geçerli API key ekleyin.
+Çözüm: .env dosyası oluşturun ve geçerli API key ekleyin.
 
 ### "Vektör veritabanı yüklenemedi!"
-*Çözüm:* Önce python create_database.py komutunu çalıştırın.
+Çözüm: Önce python create_database.py komutunu çalıştırın.
 
 ### "No module named 'X'"
-*Çözüm:* pip install -r requirements.txt komutunu çalıştırın.
+Çözüm: pip install -r requirements.txt komutunu çalıştırın.
 
 ### Chatbot yanlış cevaplar veriyor
-*Çözüm:* 
+Çözüm: 
 1. data/soru_cevap.md dosyasını kontrol edin
 2. python create_database.py ile veritabanını yeniden oluşturun
 3. k değerini artırın (daha fazla chunk)
 
 ### Yavaş yanıtlar
-*Çözüm:*
+Çözüm:
 1. k değerini azaltın (daha az chunk)
 2. chunk_size değerini küçültün
 3. İnternet bağlantınızı kontrol edin
@@ -402,14 +369,14 @@ json
 ### POST /chat
 Chatbot'a mesaj gönder
 
-*İstek:*
+İstek:
 json
 {
   "message": "Global AI Hub nedir?"
 }
 
 
-*Yanıt:*
+Yanıt:
 json
 {
   "success": true,
@@ -428,7 +395,7 @@ json
 ### POST /clear
 Konuşma geçmişini temizle
 
-*Yanıt:*
+Yanıt:
 json
 {
   "success": true,
@@ -439,7 +406,7 @@ json
 ### GET /health
 Sistem sağlık kontrolü
 
-*Yanıt:*
+Yanıt:
 json
 {
   "status": "healthy",
@@ -466,7 +433,7 @@ json
 ## 🔒 Güvenlik
 
 ### Ortam Değişkenleri
-.env dosyasını *asla* Git'e commit etmeyin!
+.env dosyasını asla Git'e commit etmeyin!
 
 .gitignore dosyasında:
 
@@ -496,8 +463,8 @@ limiter = Limiter(
 2. "New" → "Web Service"
 3. GitHub repo'nuzu bağlayın
 4. Ayarlar:
-   - *Build Command:* pip install -r requirements.txt && python create_database.py
-   - *Start Command:* gunicorn app:app
+   - Build Command: pip install -r requirements.txt && python create_database.py
+   - Start Command: gunicorn app:app
 5. Environment Variables:
    - GOOGLE_API_KEY: your-api-key
 
@@ -558,13 +525,13 @@ Bu proje MIT Lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICE
 
 ## 👨‍💻 Geliştirici
 
-*Arda Zerenay*
+Arda Zerenay
 - GitHub: [@arda235121](https://github.com/arda235121)
 - Email: ardazerenay@gmail.com
 - LinkedIn: [Profilim](https://linkedin.com/in/arda-zerenay-957993346/)
 
 
-*Alp Eray Çoker*
+Alp Eray Çoker
 - GitHub: [@alperaycoker](https://github.com/alperaycoker)
 - Email: alperaycoker@gmail.com
 - LinkedIn: [Profilim](https://linkedin.com/in/alperaycoker)
@@ -573,11 +540,11 @@ Bu proje MIT Lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICE
 
 ## 🙏 Teşekkürler
 
-- *Global AI Hub* - Proje fırsatı için
-- *Google* - Gemini API için
-- *LangChain* - RAG framework için
-- *Chroma* - Vektör veritabanı için
-- *Flask* - Web framework için
+- Global AI Hub - Proje fırsatı için
+- Google - Gemini API için
+- LangChain - RAG framework için
+- Chroma - Vektör veritabanı için
+- Flask - Web framework için
 
 ---
 
@@ -595,7 +562,3 @@ Bu proje MIT Lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICE
 - [ ] CI/CD pipeline
 
 ---
-
-
-
-
