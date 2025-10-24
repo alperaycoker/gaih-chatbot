@@ -53,6 +53,7 @@ Global AI Hub için geliştirilmiş, Retrieval-Augmented Generation (RAG) mimari
 
 ## 🏗️ Mimari
 
+
 ┌─────────────────┐
 │   Kullanıcı     │
 │     Sorusu      │
@@ -94,7 +95,6 @@ Global AI Hub için geliştirilmiş, Retrieval-Augmented Generation (RAG) mimari
 │  Kullanıcıya    │
 │     Yanıt       │
 └─────────────────┘
-
 
 ---
 
@@ -562,5 +562,6 @@ Bu proje MIT Lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICE
 - [ ] CI/CD pipeline
 
 ---
+
 
 
