@@ -529,7 +529,9 @@ Bu proje MIT Lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICE
 - GitHub: [@arda235121](https://github.com/arda235121)
 - Email: ardazerenay@gmail.com
 - LinkedIn: [Profilim](https://linkedin.com/in/arda-zerenay-957993346/)
-  *Alp Eray Çoker*
+
+
+*Alp Eray Çoker*
 - GitHub: [@alperaycoker](https://github.com/alperaycoker)
 - Email: alperaycoker@gmail.com
 - LinkedIn: [Profilim](https://linkedin.com/in/alperaycoker)
@@ -560,4 +562,5 @@ Bu proje MIT Lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICE
 - [ ] CI/CD pipeline
 
 ---
+
 
